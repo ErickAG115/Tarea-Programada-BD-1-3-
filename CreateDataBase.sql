@@ -12,9 +12,9 @@ GO
 ALTER DATABASE [ProyectoBD] SET COMPATIBILITY_LEVEL = 150
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
+BEGIN
 EXEC [ProyectoBD].[dbo].[sp_fulltext_database] @action = 'enable'
-end
+END
 GO
 ALTER DATABASE [ProyectoBD] SET ANSI_NULL_DEFAULT OFF 
 GO
