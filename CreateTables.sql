@@ -29,10 +29,14 @@ CREATE TABLE [dbo].[Departamentos](
 GO
 
 CREATE TABLE [dbo].[Puesto](
-	[ID] [int] NOT NULL,
+	[ID] [int] IDENTITY(1,1)NOT NULL,
 	[Nombre] [char](128) NOT NULL,
 	[SalarioXHora] [money] NOT NULL,
  CONSTRAINT [PK_Puesto] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [IX_Puesto] UNIQUE NONCLUSTERED 
 (
 	[Nombre] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -40,7 +44,7 @@ CREATE TABLE [dbo].[Puesto](
 GO
 
 CREATE TABLE [dbo].[Obrero](
-	[ID] [int] NOT NULL,
+	[ID] [int] IDENTITY(1,1)NOT NULL,
 	[Nombre] [char](128) NOT NULL,
 	[IdTipoDocIdentidad] [int] NOT NULL,
 	[Puesto] [char](128) NOT NULL,
@@ -60,11 +64,11 @@ GO
 ALTER TABLE [dbo].[Obrero] CHECK CONSTRAINT [FK_Obrero_Departamentos]
 GO
 
-ALTER TABLE [dbo].[Obrero]  WITH CHECK ADD  CONSTRAINT [FK_Obrero_Puesto] FOREIGN KEY([Puesto])
+ALTER TABLE [dbo].[Obrero]  WITH CHECK ADD  CONSTRAINT [FK_Obrero_Puesto1] FOREIGN KEY([Puesto])
 REFERENCES [dbo].[Puesto] ([Nombre])
 GO
 
-ALTER TABLE [dbo].[Obrero] CHECK CONSTRAINT [FK_Obrero_Puesto]
+ALTER TABLE [dbo].[Obrero] CHECK CONSTRAINT [FK_Obrero_Puesto1]
 GO
 
 ALTER TABLE [dbo].[Obrero]  WITH CHECK ADD  CONSTRAINT [FK_Obrero_TipoDocIdentidad] FOREIGN KEY([IdTipoDocIdentidad])
