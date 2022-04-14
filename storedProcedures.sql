@@ -1,4 +1,4 @@
-use [Tarea programada];
+use [ProyectoBD];
 
 --------------------------------------------------------------------------------------
 DROP PROCEDURE IF EXISTS filtrarNombre;
@@ -10,3 +10,5 @@ CREATE PROCEDURE [dbo].[filtrarNombre]
 GO
 	
 --------------------------------------------------------------------------------------
+
+EXEC filtrarNombre
