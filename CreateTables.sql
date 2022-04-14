@@ -8,6 +8,17 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+CREATE TABLE [dbo].[Usuarios](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [char](128) NOT NULL,
+	[Password] [char](128) NOT NULL,
+ CONSTRAINT [PK_usuarios] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
 CREATE TABLE [dbo].[TipoDocIdentidad](
 	[ID] [int] NOT NULL,
 	[Nombre] [char](128) NOT NULL,
@@ -32,7 +43,7 @@ CREATE TABLE [dbo].[Puesto](
 	[ID] [int] IDENTITY(1,1)NOT NULL,
 	[Nombre] [char](128) NOT NULL,
 	[SalarioXHora] [money] NOT NULL,
-	[Borrado] [binary](50) NOT NULL,
+	[Borrado] [bit] NOT NULL,
  CONSTRAINT [PK_Puesto] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -48,10 +59,11 @@ CREATE TABLE [dbo].[Obrero](
 	[ID] [int] IDENTITY(1,1)NOT NULL,
 	[Nombre] [char](128) NOT NULL,
 	[IdTipoDocIdentidad] [int] NOT NULL,
+	[ValorDocIdentidad] [int] NOT NULL,
 	[Puesto] [char](128) NOT NULL,
 	[FechaNacimiento] [date] NOT NULL,
 	[IdDepartamento] [int] NOT NULL,
-	[Borrado] [binary](50) NOT NULL,
+	[Borrado] [bit] NOT NULL,
  CONSTRAINT [PK_Obrero] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
