@@ -36,7 +36,7 @@ DROP PROCEDURE IF EXISTS [dbo].[listarEmpleados];
 
 CREATE PROCEDURE [dbo].[listarEmpleados]
 	AS BEGIN
-		SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[Nombre] FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[ID]  ORDER BY [Puesto].[Obrero];           
+		SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[Nombre] FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[Nombre]  ORDER BY [Puesto].[Nombre];           
 	END
 GO
 EXEC [listarEmpleados]
