@@ -23,14 +23,14 @@ SELECT
 	T.Item.value('@IdDepartamento', 'INT'),
 	T.Item.value('@Puesto', 'VARCHAR(128)'),
 	T.Item.value('@FechaNacimiento', 'Date'),
-	0
+	1
 FROM @xmlData.nodes('Datos/Empleados/Empleado') as T(Item)
 
-INSERT INTO dbo.Puesto(Nombre, SalarioXHora, Borrado)
+INSERT INTO dbo.Puesto(NombreP, SalarioXHora, Borrado)
 SELECT  
 	T.Item.value('@Nombre', 'VARCHAR(128)'),
 	T.Item.value('@SalarioXHora', 'MONEY'),
-	0
+	1
 FROM @xmlData.nodes('Datos/Puestos/Puesto') as T(Item)
 
 INSERT INTO dbo.TipoDocIdentidad(ID, Nombre)

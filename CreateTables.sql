@@ -41,9 +41,9 @@ GO
 
 CREATE TABLE [dbo].[Puesto](
 	[ID] [int] IDENTITY(1,1)NOT NULL,
-	[Nombre] [char](128) NOT NULL,
+	[NombreP] [char](128) NOT NULL,
 	[SalarioXHora] [money] NOT NULL,
-	[Borrado] [bit] NOT NULL DEFAULT 0,
+	[Borrado] [bit] NOT NULL DEFAULT 1,
  CONSTRAINT [PK_Puesto] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -59,7 +59,7 @@ CREATE TABLE [dbo].[Obrero](
 	[Puesto] [char](128) NOT NULL,
 	[FechaNacimiento] [date] NOT NULL,
 	[IdDepartamento] [int] NOT NULL,
-	[Borrado] [bit] NOT NULL DEFAULT 0,
+	[Borrado] [bit] NOT NULL DEFAULT 1,
  CONSTRAINT [PK_Obrero] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
