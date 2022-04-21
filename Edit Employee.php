@@ -40,10 +40,9 @@ $nombreE = $puestoE = $tipoDocE = $valorDocE = $depE = $fechaE = $IDE = "";
     <?php
     $tsql = "EXEC retornarPuestos";
     $stmt = sqlsrv_query( $conn, $tsql);
+    $check = sqlsrv_fetch($stmt);
     while( $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC) ) {
-        echo '<option value="' . htmlspecialchars($row['NombreP']) . '">' 
-        . htmlspecialchars($row['NombreP']) 
-        . '</option>';
+        echo '<option value="' .($row['NombreP']) . '">'.($row['NombreP']) .'</option>';
     }
     ?>
   </select>
