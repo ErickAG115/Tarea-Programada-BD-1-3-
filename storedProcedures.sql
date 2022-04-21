@@ -80,10 +80,6 @@ CREATE PROCEDURE  [dbo].[listarEmpleadosFiltro] @inNombre NVARCHAR(128)
 		END
 GO
 
-
-EXEC [dbo].[listarEmpleadosFiltro] @inNombre = 'Dan'
-
-
 ------------------------------------------------------
 DROP PROCEDURE IF EXISTS [dbo].[editarEmpleado];
 
@@ -93,6 +89,7 @@ CREATE PROCEDURE [dbo].[editarEmpleado] @inId INT, @inNombre NVARCHAR(128), @inT
 		[Obrero].[FechaNacimiento] = CAST(@inFechaNacimiento AS DATE), [Obrero].[IdDepartamento] = @inIdDepartamento, [Obrero].[Puesto] = @inPuesto WHERE [Obrero].[ID] = @inId;
 	END
 GO
+
 
 
 ------------------------------------------------------
