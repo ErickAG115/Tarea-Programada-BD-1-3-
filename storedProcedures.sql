@@ -31,16 +31,17 @@ CREATE PROCEDURE [dbo].[editarPuesto] @inId INT, @inNombre NVARCHAR(128), @inSal
 	END
 GO
 
+EXEC [dbo].[editarPuesto] @inId = 1, @inNombre = 'yooooo', @inSalario = 1234;
 --------------------------------------------------------------------------------------
 
 DROP PROCEDURE IF EXISTS [dbo].[listarEmpleados];
 
 CREATE PROCEDURE [dbo].[listarEmpleados]
 	AS BEGIN
-		SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[Nombre], [TipoDocIdentidad].[Nombre],[Obrero].[ValorDocIdentidad], [Obrero].[FechaNacimiento], [Departamentos].[Nombre]  
-		FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[Nombre] INNER JOIN [dbo].[TipoDocIdentidad] ON [Obrero].[IdTipoDocIdentidad] = [TipoDocIdentidad].[ID] 
+		SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[NombreP], [TipoDocIdentidad].[NombreTip],[Obrero].[ValorDocIdentidad], [Obrero].[FechaNacimiento], [Departamentos].[NombreDep]  
+		FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[NombreP] INNER JOIN [dbo].[TipoDocIdentidad] ON [Obrero].[IdTipoDocIdentidad] = [TipoDocIdentidad].[ID] 
 		INNER JOIN [dbo].[Departamentos] ON [Obrero].[IdDepartamento] = [Departamentos].[ID]
-		WHERE [Obrero].[Borrado] = 1  ORDER BY [Puesto].[Nombre];           
+		WHERE [Obrero].[Borrado] = 1  ORDER BY [Puesto].[NombreP];           
 	END
 GO
 EXEC [listarEmpleados]
@@ -66,10 +67,14 @@ CREATE PROCEDURE  [dbo].[listarEmpleadosFiltro] @inNombre NVARCHAR(128)
 	AS BEGIN
 
 		IF (@inNombre = '') -- excepcion forzada del programador
-			SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[NombreP] FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[NombreP] 
+			SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[NombreP], [TipoDocIdentidad].[NombreTip],[Obrero].[ValorDocIdentidad], [Obrero].[FechaNacimiento], [Departamentos].[NombreDep]  
+			FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[NombreP] INNER JOIN [dbo].[TipoDocIdentidad] ON [Obrero].[IdTipoDocIdentidad] = [TipoDocIdentidad].[ID] 
+			INNER JOIN [dbo].[Departamentos] ON [Obrero].[IdDepartamento] = [Departamentos].[ID]
 			WHERE [Obrero].[Borrado] = 1  ORDER BY [Puesto].[NombreP];             
 		ELSE
-			SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[NombreP] FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[NombreP] 
+			SELECT [Obrero].[ID], [Obrero].[Nombre], [Puesto].[NombreP], [TipoDocIdentidad].[NombreTip],[Obrero].[ValorDocIdentidad], [Obrero].[FechaNacimiento], [Departamentos].[NombreDep]  
+			FROM [dbo].[Obrero] INNER JOIN [dbo].[Puesto] ON [Obrero].[Puesto] = [Puesto].[NombreP] INNER JOIN [dbo].[TipoDocIdentidad] ON [Obrero].[IdTipoDocIdentidad] = [TipoDocIdentidad].[ID] 
+			INNER JOIN [dbo].[Departamentos] ON [Obrero].[IdDepartamento] = [Departamentos].[ID] 
 			WHERE [Obrero].[Borrado] = 1 AND [Obrero].[Nombre]  LIKE '%'+@inNombre+'%' ORDER BY [Puesto].[NombreP] ;
 
 		END
@@ -82,10 +87,10 @@ EXEC [dbo].[listarEmpleadosFiltro] @inNombre = 'Dan'
 ------------------------------------------------------
 DROP PROCEDURE IF EXISTS [dbo].[editarEmpleado];
 
-CREATE PROCEDURE [dbo].[editarEmpleado] @inId INT, @inNombre NVARCHAR(128), @inTipoDocIdentidad INT, @inValorDocIdentidad INT, @inFechaNacimiento DATE, @inIdDepartamento INT
+CREATE PROCEDURE [dbo].[editarEmpleado] @inId INT, @inNombre NVARCHAR(128), @inTipoDocIdentidad INT, @inValorDocIdentidad INT, @inFechaNacimiento NVARCHAR(128), @inIdDepartamento INT, @inPuesto NVARCHAR(128)
 	AS BEGIN
 		UPDATE [dbo].[Obrero] SET [Obrero].[Nombre] = @inNombre, [Obrero].[IdTipoDocIdentidad] = @inTipoDocIdentidad, [Obrero].[ValorDocIdentidad] = @inValorDocIdentidad, 
-		[Obrero].[FechaNacimiento] = @inFechaNacimiento, [Obrero].[IdDepartamento] = @inIdDepartamento WHERE [Obrero].[ID] = @inId;
+		[Obrero].[FechaNacimiento] = CAST(@inFechaNacimiento AS DATE), [Obrero].[IdDepartamento] = @inIdDepartamento, [Obrero].[Puesto] = @inPuesto WHERE [Obrero].[ID] = @inId;
 	END
 GO
 
@@ -95,15 +100,29 @@ GO
 DROP PROCEDURE IF EXISTS [dbo].[borrarEmpleado];
 
 CREATE PROCEDURE [dbo].[borrarEmpleado] @inId INT
-AS BEGIN
+	AS BEGIN
 		UPDATE [dbo].[Obrero] SET [Obrero].[Borrado] = 0 WHERE [Obrero].[ID] = @inId;
+	END
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[borrarPuesto]
+
+CREATE PROCEDURE [dbo].[borrarPuesto] @inId INT
+	AS BEGIN
+		UPDATE [dbo].[Puesto] SET [Puesto].[Borrado] = 0 WHERE [Puesto].[ID] = @inId;
 	END
 GO
 
 DROP PROCEDURE IF EXISTS [dbo].[retornarUsers];
 
 CREATE PROCEDURE [dbo].[retornarUsers]
-AS BEGIN
-	SELECT [Usuarios].[Nombre],[Usuarios].[Password] FROM [dbo].[Usuarios];
-END
+	AS BEGIN
+		SELECT [Usuarios].[Nombre],[Usuarios].[Password] FROM [dbo].[Usuarios];
+	END
+GO
+
+CREATE PROCEDURE [dbo].[retornarPuestos]
+	AS BEGIN
+		SELECT [Puesto].[NombreP] FROM [dbo].[Puesto];
+	END
 GO

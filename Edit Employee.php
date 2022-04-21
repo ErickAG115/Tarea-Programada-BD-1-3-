@@ -36,6 +36,18 @@ $nombreE = $puestoE = $tipoDocE = $valorDocE = $depE = $fechaE = $IDE = "";
   <br><br>
   ID de Departamento: <input type="number" name="depED" value="<?php echo $depE;?>">
   <br><br>
+  Puesto: <select name="puestoED">
+    <?php
+    $tsql = "EXEC retornarPuestos";
+    $stmt = sqlsrv_query( $conn, $tsql);
+    while( $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC) ) {
+        echo '<option value="' . htmlspecialchars($row['NombreP']) . '">' 
+        . htmlspecialchars($row['NombreP']) 
+        . '</option>';
+    }
+    ?>
+  </select>
+  <br><br>
   <input type="submit" name="submit" value="Editar">
   <br><br>
   <input type="submit" name="submit" value="Salir">
@@ -52,15 +64,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $valorDocE = test_input($_POST["valorED"]);
         $fechaE = test_input($_POST["fechaED"]);
         $depE = test_input($_POST["tipoED"]);
+        $puestoE = test_input($_POST["puestoED"]);
 
-        if(empty($IDE)||empty($nombreE)||empty($tipoDocE)||empty($valorDocE)||empty($fechaE)||empty($depE)){
+        if(empty($IDE)||empty($nombreE)||empty($tipoDocE)||empty($valorDocE)||empty($fechaE)||empty($depE)||empty($puestoE)){
             echo "Hay espacios vacios";
         }
         else{
-            $tsql = "EXEC [dbo].[editarEmpleado] @inId = $IDE,@inNombre = $nombreE, @inTipoDocIdentidad = $tipoDocE, @inValorDocIdentidad = $valorDocE, @inFechaNacimiento = $fechaE, @inIdDepartamento = $depE";
+            $tsql = "EXEC [dbo].[editarEmpleado] @inId = $IDE,@inNombre = $nombreE, @inTipoDocIdentidad = $tipoDocE, @inValorDocIdentidad = $valorDocE, @inFechaNacimiento = $fechaE, @inIdDepartamento = $depE, @inPuesto = $puestoE";
             $stmt = sqlsrv_query($conn, $tsql);
             $check = sqlsrv_fetch($stmt);
-            echo "El empleado ha sido insertado";
+            echo "El empleado ha sido editado";
         }
     }
     else{
@@ -75,5 +88,4 @@ function test_input($data) {
     $data = htmlspecialchars($data);
     return $data;
   }
-?>
 ?>

@@ -10,8 +10,8 @@ GO
 
 CREATE TABLE [dbo].[Usuarios](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Nombre] [char](128) NOT NULL,
-	[Password] [char](128) NOT NULL,
+	[Nombre] [varchar](16) NOT NULL,
+	[Password] [varchar](16) NOT NULL,
  CONSTRAINT [PK_usuarios] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -21,7 +21,7 @@ GO
 
 CREATE TABLE [dbo].[TipoDocIdentidad](
 	[ID] [int] NOT NULL,
-	[Nombre] [char](128) NOT NULL,
+	[NombreTip] [char](128) NOT NULL,
  CONSTRAINT [PK_TipoDocIdentidad] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -31,7 +31,7 @@ GO
 
 CREATE TABLE [dbo].[Departamentos](
 	[ID] [int] NOT NULL,
-	[Nombre] [char](128) NOT NULL,
+	[NombreDep] [char](128) NOT NULL,
  CONSTRAINT [PK_Departamentos] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC

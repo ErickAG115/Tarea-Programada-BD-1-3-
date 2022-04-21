@@ -9,7 +9,7 @@ SET @xmlData = (
 		);
 
 
-INSERT INTO dbo.Departamentos(ID, Nombre)
+INSERT INTO dbo.Departamentos(ID, NombreDep)
 SELECT  
 	T.Item.value('@Id', 'INT'),
 	T.Item.value('@Nombre', 'VARCHAR(128)')
@@ -33,7 +33,7 @@ SELECT
 	1
 FROM @xmlData.nodes('Datos/Puestos/Puesto') as T(Item)
 
-INSERT INTO dbo.TipoDocIdentidad(ID, Nombre)
+INSERT INTO dbo.TipoDocIdentidad(ID, NombreTip)
 SELECT  
 	T.Item.value('@Id', 'INT'),
 	T.Item.value('@Nombre', 'VARCHAR(128)')

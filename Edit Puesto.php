@@ -26,7 +26,7 @@ $IDE = $puestoE = $salarioE = "";
 <h3>Editar Empleado</h3>
   ID del Puesto a Editar: <input type="number" name="IDPD" value="<?php echo $IDE;?>">
   <br><br>
-  Nombre: <input type="text" name="puestoPD" value="<?php echo $nombreE;?>">
+  Nombre: <input type="text" name="puestoPD" value="<?php echo $puestoE;?>">
   <br><br>
   Salario por Hora: <input type="number" name="salarioPD" value="<?php echo $tipoDocE;?>">
   <br><br>
@@ -42,16 +42,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($_POST['submit'] == 'Editar'){
         $IDE = test_input($_POST["IDPD"]);
         $puestoE = test_input($_POST["puestoPD"]);
-        $tipoDocE = test_input($_POST["salarioPD"]);
+        $salarioE = test_input($_POST["salarioPD"]);
 
-        if(empty($IDE)||empty($puestoE)||empty($tipoDocE)){
+        if(empty($IDE)||empty($puestoE)||empty($salarioE)){
             echo "Hay espacios vacios";
         }
         else{
-            $tsql = "EXEC [dbo].[editarPuesto] @inId = $IDE,@inNombre = $puestoE, @inSalario = $salarioE";
+            $tsql = "EXEC [dbo].[editarPuesto] @inId = $IDE, @inNombre = $puestoE, @inSalario = $salarioE";
             $stmt = sqlsrv_query($conn, $tsql);
             $check = sqlsrv_fetch($stmt);
-            echo "El puesto ha sido insertado";
+            echo "El puesto ha sido editado";
         }
     }
     else{
@@ -66,5 +66,4 @@ function test_input($data) {
     $data = htmlspecialchars($data);
     return $data;
   }
-?>
 ?>

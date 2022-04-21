@@ -76,17 +76,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: http://localhost/php_program/Log%20In%20Admin.php");
     exit();
   }
-  else if($_POST['submit'] == 'Editar Puesto'){
+  else if($_POST['submit'] == 'Editar Puestos'){
     header("Location: http://localhost/php_program/Edit%20Puesto.php");
     exit();
   }
-  else if($_POST['submit'] == 'Editar Empleado'){
+  else if($_POST['submit'] == 'Editar Empleados'){
     header("Location: http://localhost/php_program/Edit%20Employee.php");
     exit();
   }
   else if($_POST['submit'] == 'Borrar Empleado'){
     $ID = test_input($_POST["IDE"]);
-    if(empty($ID){
+    if(empty($ID)){
       echo "Hay espacios vacios";
     }
     else{
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   else if($_POST['submit'] == 'Borrar Puesto'){
     $ID = test_input($_POST["IDP"]);
-    if(empty($ID){
+    if(empty($ID)){
       echo "Hay espacios vacios";
     }
     else{
@@ -137,12 +137,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <th>ID</th>
           <th>Nombre</th>
           <th>Puesto</th>
+          <th>Tipo de DocIdentidad</th>
+          <th>Valor de DocIdentidad</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Departamento</th>
           </tr>"; 
     while( $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC) ) {
+      $date = date_format($row['FechaNacimiento'],"Ymd");
       echo "<tr>";
       echo "<td>" . $row['ID'] . "</td>";
       echo "<td>" . $row['Nombre'] . "</td>";
       echo "<td>" . $row['NombreP'] . "</td>";
+      echo "<td>" . $row['NombreTip'] . "</td>";
+      echo "<td>" . $row['ValorDocIdentidad'] . "</td>";
+      echo "<td>" . $date . "</td>";
+      echo "<td>" . $row['NombreDep'] . "</td>";
       echo "</tr>";
     }
   }
@@ -158,12 +167,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <th>ID</th>
           <th>Nombre</th>
           <th>Puesto</th>
+          <th>Tipo de DocIdentidad</th>
+          <th>Valor de DocIdentidad</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Departamento</th>
           </tr>"; 
     while( $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC) ) {
+      $date = date_format($row['FechaNacimiento'],"Ymd");
       echo "<tr>";
       echo "<td>" . $row['ID'] . "</td>";
       echo "<td>" . $row['Nombre'] . "</td>";
       echo "<td>" . $row['NombreP'] . "</td>";
+      echo "<td>" . $row['NombreTip'] . "</td>";
+      echo "<td>" . $row['ValorDocIdentidad'] . "</td>";
+      echo "<td>" . $date . "</td>";
+      echo "<td>" . $row['NombreDep'] . "</td>";
       echo "</tr>";
     }
   }
