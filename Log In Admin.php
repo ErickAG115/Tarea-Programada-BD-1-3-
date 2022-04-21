@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Hay espacios vacios";
     }
     else{
-        $tsql = "EXEC retornarUsers";
+        $tsql = "EXEC [dbo].[retornarUsers]";
         $stmt = sqlsrv_query( $conn, $tsql);
         while( $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC) ) {
             if($row['UserName']==$user && $row['Password']==$password){
